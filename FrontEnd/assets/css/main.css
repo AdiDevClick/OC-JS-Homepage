@@ -35,6 +35,13 @@ body {
 	gap: var(--grid-gaps);
 }
 
+
+
+/* section {
+	margin: 50px 0
+} */
+
+/* GENERIC SELECTORS */
 p,
 h1,
 h2,
@@ -42,11 +49,6 @@ figcaption {
 	cursor: default;
 }
 
-/* section {
-	margin: 50px 0
-} */
-
-/* GENERIC SELECTORS */
 h1 {
 	display: flex;
 	flex-direction: column;
@@ -54,13 +56,13 @@ h1 {
 	font-size: 22px;
 	font-weight: 800;
 	color: var(--logo-color);
-}
 
-/* PAGE LOGO BEHAVIOR */
-h1>span {
-	font-family: 'Work Sans';
-	font-size: 10px;
-	letter-spacing: 0.1em;
+	/* PAGE LOGO BEHAVIOR */
+	&>span {
+		font-family: 'Work Sans';
+		font-size: 10px;
+		letter-spacing: 0.1em;
+	}
 }
 
 h2 {
@@ -68,6 +70,39 @@ h2 {
 	font-weight: 700;
 	font-size: 30px;
 	color: var(--text-title-color);
+}
+
+/* INPUTS / TEXTAREA / BUTTONS */
+input,
+button,
+textarea {
+	&:not(textarea) {
+		height: 50px;
+		font-size: 1.2em;
+	}
+
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+/* Use input[type="submit"] for forms,
+   Use button for generic purpose */
+input[type="submit"],
+button {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: var(--button-hover-color);
+	}
 }
 
 /* NAV BAR */
@@ -88,6 +123,7 @@ nav ul {
 	}
 }
 
+/* GENERAL LI / A HOVER COLOR BEHAVIOR */
 li:hover,
 a:hover {
 	color: var(--logo-color);
@@ -175,38 +211,6 @@ figcaption {
 
 	label {
 		margin: 2em 0 1em 0;
-	}
-}
-
-#contact input,
-button,
-textarea {
-	&:not(textarea) {
-		height: 50px;
-		font-size: 1.2em;
-	}
-
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-/* Use input[type="submit"] for forms,
-   Use button for generic purpose */
-input[type="submit"],
-button {
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin: 2em auto;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-
-	&:hover {
-		background-color: var(--button-hover-color);
 	}
 }
 
