@@ -123,6 +123,21 @@ nav ul {
 	}
 }
 
+/* GENERIC LIST BEHAVIOR */
+li {
+	color: var(--nav-text-color);
+	cursor: pointer;
+
+	a {
+		text-decoration: none;
+		color: var(--nav-text-color);
+	}
+
+	&.active {
+		font-weight: var(--active-nav-text-fweight);
+	}
+}
+
 /* GENERAL LI / A HOVER COLOR BEHAVIOR */
 li:hover,
 a:hover {
