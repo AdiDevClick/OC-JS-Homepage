@@ -1,0 +1,89 @@
+/* .main-container {
+    height: calc(100vh - 50px);
+    position: relative;
+    display: grid;
+    height: 100vh;
+} */
+
+li {
+    color: var(--nav-text-color);
+    cursor: pointer;
+
+    a {
+        text-decoration: none;
+        color: var(--nav-text-color);
+    }
+
+    &.active {
+        font-weight: var(--active-nav-text-fweight);
+    }
+}
+
+/* Boutons filtres des projets */
+.filters {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+
+    >li button {
+        width: max-content;
+        height: 37px;
+        padding: 0 1rem;
+        background-color: transparent;
+        color: var(--text-title-color);
+        border: 1px var(--text-title-color) solid;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &:is(:active, :focus, :hover) {
+            background-color: var(--text-title-color);
+            color: white;
+        }
+    }
+}
+
+/* TITLE WITH ICON ON RIGHTHAND SIDE */
+.title-with-icon {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    place-items: center;
+    margin: 5rem;
+    justify-items: end;
+
+    h2 {
+        margin: 0 !important;
+        grid-column: 1;
+    }
+
+    .icon {
+        place-self: center start;
+        grid-column: 2;
+    }
+}
+
+/* GENERIC ICON WITH TEXT */
+.icon {
+    cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    img {
+        max-width: 20px;
+    }
+}
+
+#portfolio:has(.title-with-icon) {
+    .filters {
+        display: none;
+    }
+}
+
+input[type="submit"] {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: var(--button-hover-color);
+    }
+}
