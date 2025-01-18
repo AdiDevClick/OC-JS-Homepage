@@ -19,7 +19,7 @@ li {
     }
 }
 
-/* Boutons filtres des projets */
+/* FILTER BUTTONS */
 .filters {
     display: flex;
     gap: 1rem;
@@ -41,8 +41,17 @@ li {
     }
 }
 
-/* TITLE WITH ICON ON RIGHTHAND SIDE */
-.title-with-icon {
+/* HIDING FILTERS IF LOGGED */
+#portfolio:has(.logged-user) {
+    .filters {
+        display: none;
+    }
+}
+
+/* TITLE WITH ICON ON RIGHT-HAND SIDE */
+/* USE .icon CLASS TO INSERT ICONS W/ TEXT 
+   DIV > H2 + (DIV > IMG + P) */
+.logged-user {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
@@ -70,12 +79,6 @@ li {
 
     img {
         max-width: 20px;
-    }
-}
-
-#portfolio:has(.title-with-icon) {
-    .filters {
-        display: none;
     }
 }
 
