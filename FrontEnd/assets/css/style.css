@@ -58,7 +58,10 @@
 
 /* GENERIC ICON WITH TEXT */
 .icon {
-    cursor: pointer;
+    >* {
+        cursor: pointer;
+    }
+
     display: flex;
     gap: 0.5rem;
     align-items: center;
