@@ -144,7 +144,6 @@
                     span {
                         content: url("../icons/picture.svg");
                         transition: scale 0.3s ease;
-
                     }
 
                     input {
