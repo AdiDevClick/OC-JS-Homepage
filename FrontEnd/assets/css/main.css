@@ -3,6 +3,9 @@
 :root {
 	--active-nav-text-fweight: 600;
 	--text-fweight-700: 700;
+	--text-fweight-600: 600;
+	--text-fweight-500: 500;
+	--text-fweight-400: 400;
 	--text-color: #3D3D3D;
 	--logo-color: #B1663C;
 	--nav-text-color: black;
@@ -34,8 +37,6 @@ body {
 	background: var(--main-bg-color);
 	gap: var(--grid-gaps);
 }
-
-
 
 /* section {
 	margin: 50px 0
@@ -75,10 +76,24 @@ h2 {
 /* INPUTS / TEXTAREA / BUTTONS */
 input,
 button,
-textarea {
+textarea,
+select {
 	&:not(textarea) {
 		height: 50px;
 		font-size: 1.2em;
+	}
+
+	&:is(button) {
+		padding: 0 2rem;
+		/* width: max-content; */
+		width: 50%;
+	}
+
+	&:is(select) {
+		appearance: none;
+		cursor: pointer;
+		/* Firefox fix */
+		background: url(../icons/select-arrow.svg) no-repeat #FFFFFF calc(100% - 2rem) center;
 	}
 
 	border: none;
@@ -209,7 +224,8 @@ figcaption {
 	width: 50%;
 	margin: auto;
 
-	>* {
+	>*,
+	a {
 		text-align: center;
 	}
 

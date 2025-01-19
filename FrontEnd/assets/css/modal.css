@@ -1,0 +1,271 @@
+/* MODAL */
+
+/* Add background-image: url(link) 
+   To the .big-preview class in order to 
+   display the file image.
+
+   Add the .filled class to the .big-preview > input element when 
+   a correct file is populated.
+
+   Use disabled or .disabled on the .modal__button in order
+   to grey the button
+*/
+.modal {
+    --big-preview-bg-color: #E8F1F6;
+    position: fixed;
+    inset: 0;
+    background-color: #0000004D;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    justify-items: center;
+    align-content: center;
+
+    .modal__container {
+        max-width: 630px;
+        max-height: 670px;
+        display: grid;
+        grid-template-columns: 1fr 5fr 1fr;
+        grid-template-rows: min-content 1fr max-content;
+        row-gap: 2rem;
+        position: relative;
+
+        /* Firefox fix */
+        margin-inline: auto;
+
+        border-radius: 10px;
+
+        width: 630px;
+        height: 670px;
+
+        background-color: white;
+
+        /* (close/arrows) buttons will have a bigger touch area  */
+        .close-button,
+        .left-arrow,
+        .right-arrow {
+            cursor: pointer;
+            width: 50%;
+            height: 50%;
+            position: relative;
+            place-self: center;
+            transition: scale 0.2s ease;
+
+            &:hover {
+                scale: 1.10;
+            }
+
+            &::after {
+                position: absolute;
+                inset: 0;
+                place-self: center center;
+            }
+        }
+
+        .close-button {
+            grid-column: 3;
+
+            &:after {
+                content: url(../icons/close.svg);
+            }
+        }
+
+        .left-arrow {
+            grid-column: 1;
+
+            &:after {
+                content: url(../icons/left-arrow.svg);
+            }
+        }
+
+        /* If needed in the future */
+        .right-arrow {
+            grid-column: 3;
+
+            &:after {
+                content: url(../icons/left-arrow.svg);
+                rotate: 180deg;
+            }
+        }
+
+        .modal__title {
+            padding-top: var(--grid-gaps);
+            grid-column: 2;
+            grid-row: 1;
+
+            text-align: center;
+            font-size: 26px;
+        }
+
+        .modal__content {
+            position: relative;
+            grid-column: 2;
+            grid-row: 2;
+            max-height: 100%;
+
+            &:not(:has(form)) {
+                display: grid;
+                grid-template-columns: repeat(5, auto);
+                grid-template-rows: auto;
+                gap: 1rem;
+            }
+
+            form {
+                display: grid;
+                grid-template-columns: auto;
+                grid-template-rows: auto;
+                gap: 1rem;
+                height: 100%;
+                width: 100%;
+
+                .big-preview {
+                    display: grid;
+                    overflow: hidden;
+                    border-radius: 3px;
+                    inset: 0;
+                    padding: 20px 0;
+                    position: relative;
+
+                    background-color: var(--big-preview-bg-color);
+                    place-items: center center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+
+                    z-index: 1;
+
+                    label {
+                        position: absolute;
+                        top: 0;
+                        opacity: 0;
+                        height: 0;
+                        width: 0;
+                    }
+
+                    span {
+                        content: url("../icons/picture.svg");
+                        transition: scale 0.3s ease;
+
+                    }
+
+                    input {
+                        cursor: pointer;
+                        position: absolute;
+                        opacity: 0;
+                        inset: 0;
+                        height: 100%;
+                        width: 100%;
+                    }
+
+                    p {
+                        font-size: 10px;
+                    }
+
+                    button {
+                        margin: 0;
+                        height: 36px;
+                        background-color: #CBD6DC;
+                        color: #306685;
+                        font-size: 14px;
+                        width: 40%;
+                        transition: background-color 0.3s ease, color 0.3s ease;
+                    }
+
+                    button,
+                    p,
+                    span {
+                        opacity: 0;
+                    }
+
+                    &:not(:has(input.filled)) {
+
+                        button,
+                        p,
+                        span {
+                            opacity: 1;
+                        }
+                    }
+
+                    &:hover {
+                        span {
+                            scale: 1.05
+                        }
+
+                        button {
+                            background-color: var(--text-title-color);
+                            color: white;
+                        }
+                    }
+                }
+
+                label {
+                    align-self: end;
+                    font-weight: var(--text-fweight-600);
+                }
+
+                input,
+                option,
+                select {
+                    font-size: 14px;
+                    font-weight: var(--text-fweight-400);
+                    padding: 0 20px;
+                }
+            }
+
+            .small-preview {
+                position: relative;
+                inset: 0;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+
+                .icon {
+                    position: absolute;
+                    justify-content: center;
+                    display: grid;
+                    grid-template-columns: auto;
+                    place-items: center;
+
+                    top: 20px;
+                    right: 5px;
+
+                    padding: 5px;
+
+                    max-width: 17px;
+                    max-height: 17px;
+
+                    border-radius: 2px;
+                    background-color: black;
+
+                    &::after {
+                        content: url("../icons/bin.svg");
+                        max-height: 11px;
+                    }
+                }
+            }
+        }
+
+        .modal__button {
+            grid-column: 2;
+            grid-row: 3;
+
+            text-align: center;
+            width: 100%;
+
+            border-top: 1px #B3B3B3 solid;
+
+            button {
+                width: 70%;
+                height: 36px;
+                font-size: 16px;
+
+                &.disabled,
+                &:disabled {
+                    background-color: #A7A7A7;
+                }
+            }
+        }
+    }
+}
