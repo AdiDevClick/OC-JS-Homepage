@@ -34,6 +34,14 @@
     }
 }
 
+figure {
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px) scale(1.01);
+    }
+}
+
 /* HIDING FILTERS IF LOGGED */
 #portfolio:has(.logged-user) {
     .filters {
