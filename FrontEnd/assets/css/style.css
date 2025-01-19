@@ -5,6 +5,11 @@
     height: 100vh;
 } */
 
+.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
 /* FILTER BUTTONS */
 .filters {
     display: flex;
@@ -41,20 +46,21 @@
    DIV > H2 + (DIV > IMG + P) */
 .logged-user {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr 1fr 2fr;
     gap: 2rem;
     place-items: center;
-    margin: 5rem;
-    justify-items: end;
+    margin: 5rem 0;
+    width: 100%;
+    /* justify-items: end; */
 
     h2 {
         margin: 0 !important;
-        grid-column: 1;
+        grid-column: 2;
     }
 
     .icon {
         place-self: center start;
-        grid-column: 2;
+        grid-column: 3;
     }
 }
 
