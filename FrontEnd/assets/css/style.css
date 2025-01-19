@@ -11,6 +11,13 @@
     gap: 1rem;
     justify-content: center;
 
+    li:is(:active, :focus, :hover, .active) {
+        button {
+            background-color: var(--text-title-color);
+            color: white;
+        }
+    }
+
     >li button {
         width: max-content;
         height: 37px;
@@ -19,11 +26,6 @@
         color: var(--text-title-color);
         border: 1px var(--text-title-color) solid;
         transition: background-color 0.3s ease, color 0.3s ease;
-
-        &:is(:active, :focus, :hover) {
-            background-color: var(--text-title-color);
-            color: white;
-        }
     }
 }
 
