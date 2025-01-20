@@ -1,0 +1,263 @@
+/* MAIN CSS */
+
+:root {
+	--active-nav-text-fweight: 600;
+	--text-fweight-700: 700;
+	--text-fweight-600: 600;
+	--text-fweight-500: 500;
+	--text-fweight-400: 400;
+	--text-color: #3D3D3D;
+	--logo-color: #B1663C;
+	--nav-text-color: black;
+	--main-bg-color: #FFFEF8;
+	--button-hover-color: #0E2F28;
+	--text-title-color: #1D6154;
+	--grid-gaps: 50px;
+}
+
+* {
+	color: var(--text-color);
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	max-width: 1140px;
+	margin-inline: auto;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	/* height: calc(100vh - 50px); */
+	/* position: relative; */
+	display: grid;
+	/* grid-template-rows: auto; */
+	grid-template-rows: min-content;
+	min-height: 100vh;
+	background: var(--main-bg-color);
+	gap: var(--grid-gaps);
+}
+
+/* section {
+	margin: 50px 0
+} */
+
+/* GENERIC SELECTORS */
+p,
+h1,
+h2,
+figcaption {
+	cursor: default;
+}
+
+h1 {
+	display: flex;
+	flex-direction: column;
+	font-family: 'Syne';
+	font-size: 22px;
+	font-weight: 800;
+	color: var(--logo-color);
+
+	/* PAGE LOGO BEHAVIOR */
+	&>span {
+		font-family: 'Work Sans';
+		font-size: 10px;
+		letter-spacing: 0.1em;
+	}
+}
+
+h2 {
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 30px;
+	color: var(--text-title-color);
+}
+
+/* INPUTS / TEXTAREA / BUTTONS */
+input,
+button,
+textarea,
+select {
+	padding: 0 20px;
+
+	&:not(textarea) {
+		height: 50px;
+		font-size: 1.2em;
+	}
+
+	&:is(button) {
+		padding: 0 2rem;
+		/* width: max-content; */
+		width: 50%;
+	}
+
+	&:is(textarea) {
+		padding: 10px;
+	}
+
+	&:is(select) {
+		appearance: none;
+		cursor: pointer;
+		/* Firefox fix */
+		background: url(../icons/select-arrow.svg) no-repeat #FFFFFF calc(100% - 2rem) center;
+	}
+
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+/* Use input[type="submit"] for forms,
+   Use button for generic purpose */
+input[type="submit"],
+button {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: var(--button-hover-color);
+	}
+}
+
+/* NAV BAR */
+header {
+	display: flex;
+	justify-content: space-between;
+	margin: 50px 0
+}
+
+nav ul {
+	display: flex;
+	align-items: center;
+	list-style-type: none;
+
+	li {
+		padding: 0 10px;
+		font-size: 1.2em;
+	}
+}
+
+/* GENERIC LIST BEHAVIOR */
+li {
+	color: var(--nav-text-color);
+	cursor: pointer;
+
+	a {
+		text-decoration: none;
+		color: var(--nav-text-color);
+	}
+
+	&.active {
+		font-weight: var(--active-nav-text-fweight);
+	}
+}
+
+/* GENERAL LI / A HOVER COLOR BEHAVIOR */
+li:hover,
+a:hover {
+	color: var(--logo-color);
+}
+
+/* MAIN CONTENT */
+main {
+	/* position: relative;
+    height: calc(100% - ((50px*2) + (2em*2)));
+    height: 100%; */
+	/* align-content: center; */
+	display: grid;
+	gap: var(--grid-gaps);
+}
+
+/* INTRODUCTION SECTION */
+#introduction {
+	display: flex;
+	align-items: center;
+
+	figure {
+		flex: 1
+	}
+
+	img {
+		display: block;
+		margin: auto;
+		width: 80%;
+	}
+
+	article {
+		flex: 1
+	}
+
+	h2 {
+		margin-bottom: 1em;
+	}
+
+	p {
+		margin-bottom: 0.5em;
+	}
+}
+
+/* GALLERY / PROJECTS */
+#portfolio h2 {
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+.gallery {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+
+	img {
+		width: 100%;
+	}
+}
+
+figcaption {
+	padding: 5px 0;
+}
+
+/* CONTACT / LOGIN */
+#contact {
+	width: 50%;
+	margin: auto;
+
+	>*,
+	a {
+		text-align: center;
+	}
+
+	h2 {
+		margin-bottom: 20px;
+	}
+
+	form {
+		text-align: left;
+		margin-top: 30px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	label {
+		margin: 2em 0 1em 0;
+	}
+}
+
+/* FOOTER SECTION */
+footer {
+	place-self: end;
+
+	nav ul {
+		display: flex;
+		justify-content: flex-end;
+		margin: 2em
+	}
+}
