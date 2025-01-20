@@ -213,6 +213,7 @@
             .small-preview {
                 position: relative;
                 inset: 0;
+                height: fit-content;
 
                 img {
                     width: 100%;
@@ -243,6 +244,14 @@
                         content: url("../icons/bin.svg");
                         max-height: 11px;
                     }
+                }
+
+                &:has(~ :hover) {
+                    filter: brightness(80%) blur(0.5px);
+                }
+
+                &:hover~:nth-child(n) {
+                    filter: brightness(80%) blur(0.5px);
                 }
             }
         }
