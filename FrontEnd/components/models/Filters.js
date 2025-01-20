@@ -39,7 +39,8 @@ export class Filters {
 
     /**
      * Sauvegarde les catégories de filtres récupérés via
-     * l'API dans une Map() array.
+     * l'API dans un Map() iterator array.
+     * La clé unique sera l'élement NAME.
      * Affiche les catégories à l'utilisateur
      */
     async #initCategories() {
@@ -47,7 +48,7 @@ export class Filters {
             "http://localhost:5678/api/categories"
         );
 
-        // Create categories Map() array from the response
+        // Create categories new Map() iterator from the response
         this.#categories = new UniqueSet((element) => element.name, response);
 
         // Display elements
@@ -97,7 +98,8 @@ export class Filters {
 
     /**
      * Sauvegarde les projets récupérés via
-     * l'API dans une Map() array.
+     * l'API dans un Map() iterator array.
+     * La clé unique sera l'élement ID.
      * Affiche les différents projets à l'utilisateur
      */
     async #initWorks() {
@@ -105,7 +107,7 @@ export class Filters {
             "http://localhost:5678/api/works"
         );
 
-        // Create works Map() array from the response
+        // Create works new Map() iterator from the response
         this.#works = new UniqueSet((element) => element.id, response);
 
         // Display elements
@@ -226,7 +228,7 @@ export class Filters {
         this.#worksTarget.classList.add("hidden");
 
         // On transition(opacity) end
-        this.#worksTarget.addEventListener("transitionend", (e) => {
+        this.#worksTarget.addEventListener("transitionend", () => {
             // Delete content
             this.#worksTarget.innerHTML = "";
 
