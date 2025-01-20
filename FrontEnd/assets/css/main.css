@@ -78,6 +78,8 @@ input,
 button,
 textarea,
 select {
+	padding: 0 20px;
+
 	&:not(textarea) {
 		height: 50px;
 		font-size: 1.2em;
@@ -87,6 +89,10 @@ select {
 		padding: 0 2rem;
 		/* width: max-content; */
 		width: 50%;
+	}
+
+	&:is(textarea) {
+		padding: 10px;
 	}
 
 	&:is(select) {

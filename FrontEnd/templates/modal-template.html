@@ -1,10 +1,12 @@
+<!-- Main Modal template -->
 <template id="modal-layout">
-    <aside class="modal" aria-labelledby="modal__title" aria-hidden="true" role="dialog">
+    <aside class="modal" aria-labelledby="modal__title" aria-hidden="true" role="dialog"
+        data-elements=".js-close, .js-arrow, .js-button">
         <div class="modal__container js-modal-stop">
             <!-- <h3 class="modal__title">Galerie photo</h3> -->
             <h3 class="modal__title">Ajout photo</h3>
-            <span class="left-arrow"></span>
-            <span class="close-button"></span>
+            <span class="left-arrow js-arrow"></span>
+            <span class="close-button js-close"></span>
             <div class="modal__content">
                 <!-- <form action="#" method="post">
                     <div class="big-preview">
@@ -71,23 +73,47 @@
                     <span class="icon"></span>
                 </div>
             </div> -->
-            <div class="modal__button">
+            <div class="modal__button js-button">
                 <button type="button">Ajouter une photo</button>
             </div>
         </div>
     </aside>
 </template>
 
+<!-- Modal small gallery preview template-->
 <template id="modal-preview-layout">
     <div class="small-preview">
-        <img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
+        <img class="js-img" src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
         <span class="icon"></span>
     </div>
 </template>
 
-<template id="gallery-image-layout">
-    <figure>
-        <img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-        <figcaption>Abajour Tahina</figcaption>
-    </figure>
+<!-- Modal Add Project template -->
+<template id="modal-add-picture-layout">
+    <form action="#" method="post">
+        <div class="big-preview">
+            <label id="add_image" for="file" class="label"> Ajouter une image</label>
+            <span class="img-subtitute"></span>
+            <input name="file" id="file" type="file">
+            <button type="button">+ Ajouter photo</button>
+            <p>jpg, png : 4mo max</p>
+        </div>
+        <label for="title">Titre</label>
+        <input type="text" name="title" id="title">
+        <label for="category">Catégorie</label>
+        <select name="category" id="category">
+            <option value="0"></option>
+            <option value="1">Objets</option>
+            <option value="2">Appartements</option>
+            <option value="3">Hotels & restaurants</option>
+        </select>
+    </form>
+</template>
+
+<!-- Edit button template to append next to a title -->
+<template id="edit-button-layout">
+    <div class="icon">
+        <img src="./assets/icons/edit.png" alt="icône représentant un bouton d'édition de contenu">
+        <p>modifier</p>
+    </div>
 </template>

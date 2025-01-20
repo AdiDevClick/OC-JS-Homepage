@@ -1,8 +1,8 @@
-import { fetchJSON } from "../functions/api.js";
-import { createElement } from "../functions/dom.js";
-import { UniqueSet } from "./UniqueSet.js";
+import { fetchJSON } from "../../functions/api.js";
+import { createElement } from "../../functions/dom.js";
+import { UniqueSet } from "../UniqueSet.js";
 
-export class Filters {
+export class Gallery {
     /** @type {HTMLElement} */
     #worksTarget;
     /** @type {HTMLElement} */
@@ -109,7 +109,6 @@ export class Filters {
 
         // Create works new Map() iterator from the response
         this.#works = new UniqueSet((element) => element.id, response);
-
         // Display elements
         this.#displayWorks(this.#works.values());
     }
@@ -146,7 +145,7 @@ export class Filters {
     #displayWorks(works) {
         // Create every projects
         works.forEach((work) => {
-            this.#displayWork(work);
+            this.displayWork(work, this.#worksTemplate, this.#worksTarget);
         });
     }
 
@@ -191,17 +190,17 @@ export class Filters {
      * Une fois créés, ces éléments sont sauvegardés dans le Map() array #worksTarget
      * @param {object} elements
      */
-    #displayWork(elements) {
+    displayWork(elements, templateFragment, target) {
         const template =
-            this.#worksTemplate.content.firstElementChild.cloneNode(true);
+            templateFragment.content.firstElementChild.cloneNode(true);
 
         for (const [key, value] of Object.entries(elements)) {
             for (const [element, selector] of Object.entries(
                 this.#worksElements
             )) {
                 if (element === "title") {
-                    template.querySelector(selector).innerText =
-                        elements[element];
+                    const title = template.querySelector(selector);
+                    title ? (title.innerText = elements[element]) : null;
                 }
 
                 if (element === "imageUrl") {
@@ -214,8 +213,32 @@ export class Filters {
             // Saving element in the Map() array
             this.#works.set(elements.id, { work: template });
 
-            this.#worksTarget.append(template);
+            target.append(template);
         }
+        // const template =
+        //     this.#worksTemplate.content.firstElementChild.cloneNode(true);
+
+        // for (const [key, value] of Object.entries(elements)) {
+        //     for (const [element, selector] of Object.entries(
+        //         this.#worksElements
+        //     )) {
+        //         if (element === "title") {
+        //             template.querySelector(selector).innerText =
+        //                 elements[element];
+        //         }
+
+        //         if (element === "imageUrl") {
+        //             template.querySelector(selector).src = elements[element];
+        //         }
+
+        //         template.dataset.category = elements["categoryId"];
+        //     }
+
+        //     // Saving element in the Map() array
+        //     this.#works.set(elements.id, { work: template });
+
+        //     this.#worksTarget.append(template);
+        // }
     }
 
     /**
@@ -248,5 +271,9 @@ export class Filters {
             // Show content
             this.#worksTarget.classList.remove("hidden");
         });
+    }
+
+    works() {
+        return this.#works.values();
     }
 }

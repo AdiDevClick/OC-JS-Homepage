@@ -86,3 +86,12 @@ figure {
         max-width: 20px;
     }
 }
+
+/* GENERIC ERROR */
+.error {
+    position: absolute;
+    left: 0;
+    right: 0;
+    color: red;
+    margin: 5rem 0;
+}
