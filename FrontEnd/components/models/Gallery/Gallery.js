@@ -145,7 +145,12 @@ export class Gallery {
     #displayWorks(works) {
         // Create every projects
         works.forEach((work) => {
-            this.displayWork(work, this.#worksTemplate, this.#worksTarget);
+            this.displayWork(
+                work,
+                this.#worksTemplate,
+                this.#worksTarget,
+                "work"
+            );
         });
     }
 
@@ -189,8 +194,11 @@ export class Gallery {
      * en prenant en compte les éléments des datasets.
      * Une fois créés, ces éléments sont sauvegardés dans le Map() array #worksTarget
      * @param {object} elements
+     * @param {DocumentFragment} templateFragment - Le fragment du template
+     * @param {HTMLElement} target - L'élément qui recevra le nouveau contenu
+     * @param {string} name
      */
-    displayWork(elements, templateFragment, target) {
+    displayWork(elements, templateFragment, target, name) {
         const template =
             templateFragment.content.firstElementChild.cloneNode(true);
 
@@ -209,11 +217,13 @@ export class Gallery {
 
                 template.dataset.category = elements["categoryId"];
             }
-
+            // console.log({ [names]: template });
             // Saving element in the Map() array
-            this.#works.set(elements.id, { work: template });
+            this.#works.set(elements.id, { [name]: template });
 
-            target.append(template);
+            target.prepend(template);
+
+            return template;
         }
         // const template =
         //     this.#worksTemplate.content.firstElementChild.cloneNode(true);
@@ -274,6 +284,18 @@ export class Gallery {
     }
 
     works() {
-        return this.#works.values();
+        return this.#works;
+    }
+
+    categories() {
+        return this.#categories;
+    }
+
+    get worksTarget() {
+        return this.#worksTarget;
+    }
+
+    get worksTemplate() {
+        return this.#worksTemplate;
     }
 }

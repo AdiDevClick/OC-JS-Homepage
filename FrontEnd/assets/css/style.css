@@ -92,6 +92,7 @@ figure {
     position: absolute;
     left: 0;
     right: 0;
+    justify-self: center;
     color: red;
     margin: 5rem 0;
 }

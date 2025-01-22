@@ -10,9 +10,11 @@ export class UniqueSet {
      * @param {object} items L'objet qui sera Map
      */
     constructor(cb, items) {
-        items.forEach((item) => {
-            if (!this.#map.has(cb(item))) this.#map.set(cb(item), item);
-        });
+        if (items) {
+            items.forEach((item) => {
+                if (!this.#map.has(cb(item))) this.#map.set(cb(item), item);
+            });
+        }
     }
 
     /**
@@ -25,6 +27,10 @@ export class UniqueSet {
 
     clear() {
         this.#map.clear();
+    }
+
+    size() {
+        return this.#map.size;
     }
 
     entries() {
