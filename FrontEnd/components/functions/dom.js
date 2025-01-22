@@ -34,3 +34,18 @@ export function createButtonNearTitle(target, template) {
     titleWrapper.append(title, icon);
     section.prepend(titleWrapper);
 }
+
+/**
+ * Crer une promesse qui se resoudra
+ * après un délai défini en paramètre
+ * @param {number} duration - La durée de l'attente
+ * @param {string} message - Message à retourner dans la promesse si besoin
+ * @returns
+ */
+export function wait(duration, message) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(message);
+        }, duration);
+    });
+}
