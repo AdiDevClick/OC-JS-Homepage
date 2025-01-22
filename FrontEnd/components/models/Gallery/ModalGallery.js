@@ -10,14 +10,17 @@ import {
 
 /**
  * @typedef {object} User
- * @property {number} id
- * @property {string} token
+ * @property {number} id - L'ID de l'utilisateur
+ * @property {string} token - Le token fourni par le serveur pour l'authentification
  */
 
 /**
  * @typedef {object} Gallery
- * @property {Function} works
- * @property {Function} displayWork
+ * @property {Function} works - Récupère l'iterateur de projets.
+ * @property {Function} categories - Récupère l'iterateur de catégories.
+ * @property {Function} displayWork - Affiche le projet sur la splashscreen.
+ * @property {PropertyKey} worksTemplate - Récupère le template pour les projets.
+ * @property {PropertyKey} worksTarget - Récupère la target qui recevra l'élément.
  */
 export class ModalGallery {
     /** @type {Gallery} */
@@ -81,11 +84,7 @@ export class ModalGallery {
                                 );
 
                                 e.target.removeAttribute("style");
-
-                                console.log(this.#errorsFound.size());
                             } else {
-                                console.log(this.#errorsFound.size());
-
                                 throw new Error(titleError);
                             }
                         } catch (error) {
@@ -143,7 +142,6 @@ export class ModalGallery {
 
                                 this.#fileChecker(file);
 
-                                console.log();
                                 alert.remove();
                                 e.target.parentElement.removeAttribute("style");
 
@@ -337,13 +335,6 @@ export class ModalGallery {
         if (this.#errorsFound.size() != 0 && this.#validInputs.size != 3) {
             return;
         }
-        // const datas = new FormData
-        // datas.append("image", "image.png")
-        // const datas = {
-        //     image: "image.png",
-        //     title: "test",
-        //     category: 1,
-        // };
 
         try {
             const response = await fetchJSON(
@@ -534,6 +525,14 @@ export class ModalGallery {
         document.dispatchEvent(event);
     }
 
+    /**
+     * Ajoute l'alerte et display le message d'erreur
+     * avec un effet
+     * @param {string} error - L'erreur à afficher
+     * @param {HTMLElement} alert - Le conteneur de l'alerte
+     * @param {HTMLElement} input
+     * @param {HTMLElement} previewTarget - Pour l'input file seulement. L'élément qui recevra l'effet boxshadow
+     */
     #displayErrorMessage(error, alert, input, previewTarget = null) {
         this.#content.append(alert);
         alert.innerText = error.message;
@@ -626,6 +625,7 @@ export class ModalGallery {
         this.#controller = new AbortController();
         this.#elements = modal.querySelectorAll(elements);
 
+        // Create listeners on all elements
         this.#elements.forEach((elem) => {
             elem.addEventListener("click", (e) => this.#onClick(e, modal), {
                 once: true,
@@ -647,11 +647,12 @@ export class ModalGallery {
             });
     }
 
+    /**
+     * Vérifie que le fichier à la bonne taille
+     * Vérifie que le fichier est autorisé
+     * @param {object} file - L'objet contenant les informations du fichier
+     */
     #fileChecker(file) {
-        // try {
-        // if (e.target.files.length > 0) {
-        // const file = e.target.files[0];
-
         if (!this.#allowedFileTypes.includes(file.type)) {
             throw new Error(notAllowedFile);
         }
@@ -659,22 +660,6 @@ export class ModalGallery {
         if (file.size > this.#fileSize * 1024 * 1024) {
             throw new Error(`Votre image ne peut dépasser ${fileSize}MB`);
         }
-        // }
-        // } catch (error) {
-        //     this.#displayErrorMessage(
-        //         error,
-        //         alert,
-        //         e.target,
-        //         e.target.parentElement
-        //     );
-        //     this.#errorsFound.set(e.currentTarget.parentElement, error.message);
-        //     this.#checkValidity(
-        //         this.#validInputs,
-        //         "file",
-        //         "delete",
-        //         e.currentTarget.parentElement
-        //     );
-        // }
     }
 
     /**
