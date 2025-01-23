@@ -56,7 +56,8 @@ figure {
    DIV > H2 + (DIV > IMG + P) */
 .logged-user {
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-columns: 2fr max-content 2fr;
+    /* grid-template-columns: 2fr 1fr 2fr; */
     gap: 2rem;
     place-items: center;
     margin: 5rem 0;
