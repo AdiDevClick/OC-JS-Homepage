@@ -213,6 +213,7 @@ main {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: repeat(auto-fit, 500px);
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 
