@@ -278,11 +278,16 @@
                 width: 70%;
                 height: 36px;
                 font-size: 16px;
+                transition: transform 0.1s ease;
 
                 &.disabled,
                 &:disabled {
                     background-color: #A7A7A7;
                 }
+            }
+
+            button:not(:disabled):active {
+                transform: scale(0.9);
             }
         }
     }
