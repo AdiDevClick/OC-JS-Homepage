@@ -363,15 +363,18 @@ export class ModalGallery {
 
             work.work.scrollIntoView({ behavior: "smooth", block: "center" });
             await wait(200);
-            let lastKnownScrollPosition = 0;
-
-            window.addEventListener("scroll", (e) => {
-                lastKnownScrollPosition = window.scrollY;
-            });
-
+            // let lastKnownScrollPosition = 0;
+            // let ticking = false;
+            work.work.focus();
+            // document.addEventListener(
+            //     "scrollend",
+            //     () => {
+            //         // lastKnownScrollPosition = window.scrollY;
+            //     },
+            //     { once: true }
+            // );
             this.#modalContainer.style.position = "absolute";
             this.#modalContainer.style.inset = "0";
-
             const workOffsets = work.work.getBoundingClientRect();
 
             const leftPosition =
@@ -386,6 +389,8 @@ export class ModalGallery {
                     this.#controller.abort();
                     // this.#modal.remove();
                     this.#closeModal(this.#modal);
+                    // work.work.style.scale = "1.05";
+                    work.work.style.animation = "bounce 0.5s ease";
                 },
                 {
                     once: true,
