@@ -15,8 +15,6 @@ export class Gallery {
     #categories;
     /** @type {MapIterator} */
     #works;
-    /** @type {Promise} */
-    #response;
 
     /** @param {HTMLElement} element */
     constructor(element) {
@@ -57,8 +55,8 @@ export class Gallery {
 
     /**
      * Permet de retourner une promesse contenant la Query SQL
-     * @param {string} url Endpoint URL
-     * @param {object|array} options Objet ou Array à passer si nécéssaire
+     * @param {string} url - Endpoint URL
+     * @param {object|array} options - Objet ou Array à passer si nécéssaire
      * @returns
      */
     async #fetchItems(url, options = {}) {
@@ -217,7 +215,6 @@ export class Gallery {
 
                 template.dataset.category = elements["categoryId"];
             }
-            // console.log({ [names]: template });
             // Saving element in the Map() array
             this.#works.set(elements.id, { [name]: template });
 
@@ -225,30 +222,6 @@ export class Gallery {
 
             return template;
         }
-        // const template =
-        //     this.#worksTemplate.content.firstElementChild.cloneNode(true);
-
-        // for (const [key, value] of Object.entries(elements)) {
-        //     for (const [element, selector] of Object.entries(
-        //         this.#worksElements
-        //     )) {
-        //         if (element === "title") {
-        //             template.querySelector(selector).innerText =
-        //                 elements[element];
-        //         }
-
-        //         if (element === "imageUrl") {
-        //             template.querySelector(selector).src = elements[element];
-        //         }
-
-        //         template.dataset.category = elements["categoryId"];
-        //     }
-
-        //     // Saving element in the Map() array
-        //     this.#works.set(elements.id, { work: template });
-
-        //     this.#worksTarget.append(template);
-        // }
     }
 
     /**

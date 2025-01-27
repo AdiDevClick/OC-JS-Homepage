@@ -41,6 +41,14 @@ export async function fetchJSON(url = "", options = {}) {
     }
 }
 
+/**
+ * Récupère un template sous form de fragment.
+ * S'il existe déjà sur le DOM, il sera directement renvoyé pour
+ * éviter une requête inutile.
+ * @param {string} url - Le endpoint serveur
+ * @param {string} targt - L'élément à récupérer sur le DOM
+ * @returns
+ */
 export async function fetchTemplate(url, targt) {
     const target = targt;
     const loadedTemplate = document.querySelector(target);
@@ -64,9 +72,6 @@ export async function fetchTemplate(url, targt) {
         }
         return loadedTemplate;
     } catch (error) {
-        // const alert = alertMessage(error.message);
-        // const container = document.querySelector(".toast-container");
-        // container.insertAdjacentElement("beforeend", alert);
         console.log(error);
     }
 }

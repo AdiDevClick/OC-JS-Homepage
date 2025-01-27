@@ -5,6 +5,8 @@ import {
     categoryError,
     emptyImg,
     notAllowedFile,
+    notLogged,
+    postError,
     titleError,
 } from "./gallerySettings.js";
 
@@ -31,10 +33,12 @@ export class ModalGallery {
     #elements;
     /** @type {HTMLElement} */
     #modal;
-
+    /** @type {HTMLElement} */
+    #modalContainer;
     /** @type {HTMLElement} */
     #content;
-
+    /** @type {HTMLElement} */
+    #HTMLMain = document.querySelector("main");
     /** @type {MutationObserver} */
     #observer;
     /** @type {AbortController} */
@@ -43,7 +47,6 @@ export class ModalGallery {
     #errorsFound = new UniqueSet();
     /** @type {SetIterator} */
     #validInputs = new Set();
-
     /** @type {number} */
     #fileSize = 4;
     #allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
@@ -73,20 +76,19 @@ export class ModalGallery {
                     "input",
                     (e) => {
                         try {
-                            if (e.target.value.toString().trim() !== "") {
-                                alert.remove();
-
-                                this.#errorsFound.delete(e.target);
-                                this.#checkValidity(
-                                    this.#validInputs,
-                                    "title",
-                                    "add"
-                                );
-
-                                e.target.removeAttribute("style");
-                            } else {
+                            if (e.target.value.toString().trim() === "") {
                                 throw new Error(titleError);
                             }
+                            alert.remove();
+
+                            this.#errorsFound.delete(e.target);
+                            this.#checkValidity(
+                                this.#validInputs,
+                                "title",
+                                "add"
+                            );
+
+                            e.target.removeAttribute("style");
                         } catch (error) {
                             this.#displayErrorMessage(error, alert, e.target);
                             this.#errorsFound.set(e.target, error.message);
@@ -105,20 +107,19 @@ export class ModalGallery {
                     "change",
                     (e) => {
                         try {
-                            if (e.target.value != 0) {
-                                alert.remove();
-
-                                this.#errorsFound.delete(e.target);
-                                this.#checkValidity(
-                                    this.#validInputs,
-                                    "category",
-                                    "add"
-                                );
-
-                                e.target.removeAttribute("style");
-                            } else {
+                            if (e.target.value == 0) {
                                 throw new Error(categoryError);
                             }
+                            alert.remove();
+
+                            this.#errorsFound.delete(e.target);
+                            this.#checkValidity(
+                                this.#validInputs,
+                                "category",
+                                "add"
+                            );
+
+                            e.target.removeAttribute("style");
                         } catch (error) {
                             this.#displayErrorMessage(error, alert, e.target);
                             this.#errorsFound.set(e.target, error.message);
@@ -137,33 +138,33 @@ export class ModalGallery {
                     "change",
                     (e) => {
                         try {
-                            if (e.target.files.length > 0) {
-                                const file = e.target.files[0];
-
-                                this.#fileChecker(file);
-
-                                alert.remove();
-                                e.target.parentElement.removeAttribute("style");
-
-                                this.#imgURL = URL.createObjectURL(file);
-                                e.currentTarget.classList.add("filled");
-                                e.target.parentElement.style.backgroundImage = `url(${
-                                    this.#imgURL
-                                })`;
-
-                                this.#errorsFound.delete(
-                                    e.currentTarget.parentElement
-                                );
-                                this.#checkValidity(
-                                    this.#validInputs,
-                                    "file",
-                                    "add"
-                                );
-                            }
-
                             if (e.target.files.length === 0) {
                                 throw new Error(emptyImg);
                             }
+
+                            const file = e.target.files[0];
+
+                            // Check file size & type
+                            this.#fileChecker(file);
+
+                            alert.remove();
+                            e.target.parentElement.removeAttribute("style");
+
+                            // Create URL to add to the background: url()
+                            this.#imgURL = URL.createObjectURL(file);
+                            e.currentTarget.classList.add("filled");
+                            e.target.parentElement.style.backgroundImage = `url(${
+                                this.#imgURL
+                            })`;
+
+                            this.#errorsFound.delete(
+                                e.currentTarget.parentElement
+                            );
+                            this.#checkValidity(
+                                this.#validInputs,
+                                "file",
+                                "add"
+                            );
                         } catch (error) {
                             this.#displayErrorMessage(
                                 error,
@@ -217,9 +218,6 @@ export class ModalGallery {
                             //     alert,
                             //     e.detail
                             // );
-                        } else {
-                            console.log("size OK");
-                            console.log(this.#errorsFound.size());
                         }
                     },
                     { signal: this.#controller.signal }
@@ -238,7 +236,7 @@ export class ModalGallery {
 
         if (!this.#checkUser()) {
             window.location = "index.html";
-            throw new Error("Veuillez vous connecter");
+            throw new Error(notLogged);
         }
 
         // Init modal
@@ -250,14 +248,14 @@ export class ModalGallery {
      * Applique les event listeners initiaux
      */
     async #initModal() {
-        const target = document.querySelector("main");
-        let modal = target.querySelector("#modal-layout");
+        // const target = document.querySelector("main");
+        let modal = this.#HTMLMain.querySelector("#modal-layout");
         if (!modal) {
             modal = await fetchTemplate(
                 "../templates/modal-template.html",
                 "#modal-layout"
             );
-            target.append(modal);
+            this.#HTMLMain.append(modal);
         }
 
         this.#modal = modal.content.firstElementChild.cloneNode(true);
@@ -265,7 +263,7 @@ export class ModalGallery {
         this.#modal.setAttribute("aria-modal", true);
         this.#content = this.#modal.querySelector(".modal__content");
 
-        target.append(this.#modal);
+        this.#HTMLMain.append(this.#modal);
 
         // Create listeners
         this.#initListeners(this.#modal, this.#modal.dataset.elements);
@@ -292,7 +290,6 @@ export class ModalGallery {
     async #onSubmit(e, form, alert, retries = 3, delay = 1000) {
         e.preventDefault();
         const datas = new FormData(form);
-        const img = datas.get("image");
         for (const data of datas) {
             try {
                 if (data[0] === "image") {
@@ -349,9 +346,7 @@ export class ModalGallery {
             );
 
             if (!response.ok && response.ok !== undefined) {
-                throw new Error(
-                    "Une erreur s'est produite lors de l'envoi de votre Projet"
-                );
+                throw new Error(postError);
             }
 
             // Saving the new item
@@ -364,9 +359,46 @@ export class ModalGallery {
                 this.#filterModule.worksTarget,
                 "work"
             );
+            const work = this.#filterModule.works().get(response.id);
 
-            this.#controller.abort();
-            this.#modal.remove();
+            work.work.scrollIntoView({ behavior: "smooth", block: "center" });
+            await wait(200);
+            // let lastKnownScrollPosition = 0;
+            // let ticking = false;
+            work.work.focus();
+            // document.addEventListener(
+            //     "scrollend",
+            //     () => {
+            //         // lastKnownScrollPosition = window.scrollY;
+            //     },
+            //     { once: true }
+            // );
+            this.#modalContainer.style.position = "absolute";
+            this.#modalContainer.style.inset = "0";
+            const workOffsets = work.work.getBoundingClientRect();
+
+            const leftPosition =
+                this.#modalContainer.offsetLeft - work.work.offsetLeft;
+
+            this.#modalContainer.style.transform = `translate3d(-${leftPosition}px, ${workOffsets.top}px, 100px) scale(0)`;
+            this.#modalContainer.style.opacity = "0";
+
+            this.#modalContainer.addEventListener(
+                "transitionend",
+                () => {
+                    // Clear listeners and iterators
+                    this.#controller.abort();
+                    this.#validInputs.clear();
+                    this.#errorsFound.clear();
+
+                    this.#closeModal(this.#modal);
+                    // work.work.style.scale = "1.05";
+                    work.work.style.animation = "bounce 0.5s ease";
+                },
+                {
+                    once: true,
+                }
+            );
         } catch (error) {
             if (retries > 0) {
                 // await new Promise((res) => setTimeout(res, delay));
@@ -442,21 +474,27 @@ export class ModalGallery {
 
         // Add picture Button
         if (currentTarget.classList.contains("js-button")) {
-            console.log("button");
             // let content = document.querySelector("#modal-add-picture-layout");
             this.#content.classList.add("hidden");
             this.#content.addEventListener(
                 "transitionend",
                 async () => {
                     this.#content.innerHTML = "";
-                    const response = await fetchTemplate(
-                        "../templates/modal-template.html",
+
+                    let formTemplate = modal.querySelector(
                         "#modal-add-picture-layout"
                     );
-                    this.#modal.append(response);
 
+                    if (!formTemplate) {
+                        formTemplate = await fetchTemplate(
+                            "../templates/modal-template.html",
+                            "#modal-add-picture-layout"
+                        );
+                        this.#HTMLMain.append(formTemplate);
+                    }
                     const template =
-                        response.content.firstElementChild.cloneNode(true);
+                        formTemplate.content.firstElementChild.cloneNode(true);
+
                     this.#content.append(template);
                     this.#content.classList.remove("hidden");
                     button.innerText = "Valider";
@@ -476,9 +514,10 @@ export class ModalGallery {
         if (modal === null) return;
         modal.setAttribute("aria-hidden", true);
         modal.removeAttribute("aria-modal");
-        modal
-            .querySelector(".js-modal-stop")
-            .removeEventListener("click", this.#stopPropagation);
+        this.#modalContainer.removeEventListener(
+            "click",
+            this.#stopPropagation
+        );
         modal.remove();
     }
 
@@ -554,14 +593,14 @@ export class ModalGallery {
      * pour afficher les projets
      */
     async #addWorks() {
-        const target = document.querySelector("main");
+        // const target = document.querySelector("main");
 
         let template = await fetchTemplate(
             "../templates/modal-template.html",
             "#modal-preview-layout"
         );
 
-        target.append(template);
+        this.#HTMLMain.append(template);
 
         this.#filterModule
             .works()
@@ -640,11 +679,11 @@ export class ModalGallery {
         });
 
         // Sets the stopPropagation for outside click
-        modal
-            .querySelector(".js-modal-stop")
-            .addEventListener("click", this.#stopPropagation, {
-                signal: this.#controller.signal,
-            });
+        this.#modalContainer = modal.querySelector(".js-modal-stop");
+
+        this.#modalContainer.addEventListener("click", this.#stopPropagation, {
+            signal: this.#controller.signal,
+        });
     }
 
     /**
