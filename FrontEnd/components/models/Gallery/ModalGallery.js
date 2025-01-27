@@ -386,8 +386,11 @@ export class ModalGallery {
             this.#modalContainer.addEventListener(
                 "transitionend",
                 () => {
+                    // Clear listeners and iterators
                     this.#controller.abort();
-                    // this.#modal.remove();
+                    this.#validInputs.clear();
+                    this.#errorsFound.clear();
+
                     this.#closeModal(this.#modal);
                     // work.work.style.scale = "1.05";
                     work.work.style.animation = "bounce 0.5s ease";
