@@ -613,9 +613,15 @@ export class ModalGallery {
                     "preview"
                 );
                 // const trashIcon = work.querySelector(".icon");
-                displayedWork
-                    .querySelector(".icon")
-                    .addEventListener("click", (e) => this.#onDelete(e, work));
+                displayedWork.querySelector(".icon").addEventListener(
+                    "click",
+                    (e) => {
+                        this.#onDelete(e, work);
+                    },
+                    {
+                        once: true,
+                    }
+                );
             });
     }
 
@@ -655,7 +661,7 @@ export class ModalGallery {
     }
 
     /**
-     * Target tous les éléments passé en paramètre et applique
+     * Target tous les éléments passés en paramètre et applique
      * un "click" event
      * @param {HTMLElement} modal - Le HTML de la modale
      * @param {string} elements - Un string de selectors
