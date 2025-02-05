@@ -119,6 +119,7 @@ export class Gallery {
      */
     #createListener(element) {
         element.addEventListener("click", (e) => {
+            e.preventDefault();
             const filterButton = e.currentTarget;
             this.#categories.values().forEach((element) => {
                 if (
@@ -234,26 +235,31 @@ export class Gallery {
         this.#worksTarget.classList.add("hidden");
 
         // On transition(opacity) end
-        this.#worksTarget.addEventListener("transitionend", () => {
-            // Delete content
-            this.#worksTarget.innerHTML = "";
+        this.#worksTarget.addEventListener(
+            "transitionend",
+            () => {
+                // Delete content
+                this.#worksTarget.innerHTML = "";
 
-            // Reappend new content
-            this.#works.forEach((element) => {
-                if (
-                    element.categoryId.toString() === filterButton.id.toString()
-                ) {
-                    this.#worksTarget.append(element.work);
-                }
+                // Reappend new content
+                this.#works.forEach((element) => {
+                    if (
+                        element.categoryId.toString() ===
+                        filterButton.id.toString()
+                    ) {
+                        this.#worksTarget.append(element.work);
+                    }
 
-                if (filterButton.id.toString() === "0") {
-                    this.#worksTarget.append(element.work);
-                }
-            });
+                    if (filterButton.id.toString() === "0") {
+                        this.#worksTarget.append(element.work);
+                    }
+                });
 
-            // Show content
-            this.#worksTarget.classList.remove("hidden");
-        });
+                // Show content
+                this.#worksTarget.classList.remove("hidden");
+            },
+            { once: true }
+        );
     }
 
     works() {
