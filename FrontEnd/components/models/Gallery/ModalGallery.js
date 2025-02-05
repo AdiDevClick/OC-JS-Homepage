@@ -386,11 +386,7 @@ export class ModalGallery {
             this.#modalContainer.addEventListener(
                 "transitionend",
                 () => {
-                    // Clear listeners and iterators
-                    this.#controller.abort();
-                    this.#validInputs.clear();
-                    this.#errorsFound.clear();
-
+                    // Clear listeners and iterators & close modal
                     this.#closeModal(this.#modal);
                     // work.work.style.scale = "1.05";
                     work.work.style.animation = "bounce 0.5s ease";
@@ -455,12 +451,8 @@ export class ModalGallery {
             this.#content.addEventListener(
                 "transitionend",
                 () => {
-                    const errorMessage = modal.querySelector(".error");
-                    if (errorMessage) {
-                        this.#controller.abort();
-                        this.#validInputs.clear();
-                        this.#errorsFound.clear();
-                    }
+                    this.#validInputs.clear();
+                    this.#errorsFound.clear();
                     this.#controller.abort();
                     // Hide content
                     this.#content.innerHTML = "";
@@ -524,6 +516,9 @@ export class ModalGallery {
             "click",
             this.#stopPropagation
         );
+        this.#controller.abort();
+        this.#validInputs.clear();
+        this.#errorsFound.clear();
         modal.remove();
     }
 
