@@ -61,7 +61,7 @@ export class ModalGallery {
             ) {
                 // this.#validInputs = new Set();
                 const form = mutation.addedNodes[0];
-                let alert = this.#modal.querySelector(".alert");
+                let alert = this.#modal.querySelector(".error");
                 if (!alert) {
                     alert = createElement("p", {
                         class: "error",
@@ -455,6 +455,12 @@ export class ModalGallery {
             this.#content.addEventListener(
                 "transitionend",
                 () => {
+                    const errorMessage = modal.querySelector(".error");
+                    if (errorMessage) {
+                        this.#controller.abort();
+                        this.#validInputs.clear();
+                        this.#errorsFound.clear();
+                    }
                     this.#controller.abort();
                     // Hide content
                     this.#content.innerHTML = "";
