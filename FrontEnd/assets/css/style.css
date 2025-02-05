@@ -1,0 +1,126 @@
+/* .main-container {
+    height: calc(100vh - 50px);
+    position: relative;
+    display: grid;
+    height: 100vh;
+} */
+
+
+/* FILTER BUTTONS */
+.filters {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.filters li:is(:active, :focus, :hover, .active) {
+    button {
+        background-color: var(--text-title-color);
+        color: white;
+    }
+}
+
+.filters>li button {
+    width: max-content;
+    height: 37px;
+    padding: 0 1rem;
+    background-color: transparent;
+    color: var(--text-title-color);
+    border: 1px var(--text-title-color) solid;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* HIDING FILTERS IF LOGGED */
+#portfolio:has(.logged-user) .filters {
+    display: none;
+}
+
+/* GALERY IMAGES */
+figure {
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+figure:hover {
+    transform: translateY(-10px) scale(1.01);
+}
+
+
+/* TITLE WITH ICON ON RIGHT-HAND SIDE */
+/* USE .icon CLASS TO INSERT ICONS W/ TEXT 
+   DIV > H2 + (DIV > IMG + P) */
+.logged-user {
+    display: grid;
+    grid-template-columns: 2fr max-content 2fr;
+    /* grid-template-columns: 2fr 1fr 2fr; */
+    gap: 2rem;
+    place-items: center;
+    margin: 5rem 0;
+    width: 100%;
+    /* justify-items: end; */
+
+    /* .logged-user h2 {
+        margin: 0 !important;
+        grid-column: 2;
+    } */
+
+    /* .logged-user .icon {
+        place-self: center start;
+        grid-column: 3;
+    } */
+}
+
+.logged-user h2 {
+    margin: 0 !important;
+    grid-column: 2;
+}
+
+.logged-user .icon {
+    place-self: center start;
+    grid-column: 3;
+}
+
+/* GENERIC ICON WITH TEXT */
+.icon {
+    /* >* {
+        cursor: pointer;
+    } */
+
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    transition: transform 0.3s ease;
+    /* img {
+        max-width: 20px;
+    } */
+}
+
+.icon>* {
+    cursor: pointer;
+}
+
+.icon img {
+    max-width: 20px;
+}
+
+.icon:hover {
+    transform: scale(1.03);
+}
+
+/* GENERIC ERROR */
+.error {
+    position: absolute;
+    left: 0;
+    right: 0;
+    justify-self: center;
+    color: red;
+    margin: 5rem 0;
+}
+
+
+/* HIDE ELEMENTS */
+.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
