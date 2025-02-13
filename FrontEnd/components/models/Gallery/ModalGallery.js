@@ -248,7 +248,6 @@ export class ModalGallery {
      * Applique les event listeners initiaux
      */
     async #initModal() {
-        // const target = document.querySelector("main");
         let modal = this.#HTMLMain.querySelector("#modal-layout");
         if (!modal) {
             modal = await fetchTemplate(
@@ -317,15 +316,6 @@ export class ModalGallery {
             } catch (error) {
                 this.#displayErrorMessage(error, alert, e.target);
                 return false;
-                //     e.currentTarget.parentElement,
-                //     error.message
-                // );
-                // this.#checkValidity(
-                //     this.#validInputs,
-                //     "file",
-                //     "delete",
-                //     e.currentTarget.parentElement
-                // );
             }
         }
 
@@ -456,6 +446,10 @@ export class ModalGallery {
                     this.#controller.abort();
                     // Hide content
                     this.#content.innerHTML = "";
+                    // this.#content.querySelector("form").style.display = "none";
+                    this.#content
+                        .querySelectorAll("small-preview")
+                        .forEach((item) => (item.style.display = null));
                     // Display works
                     this.#addWorks();
 
@@ -477,6 +471,9 @@ export class ModalGallery {
             this.#content.addEventListener(
                 "transitionend",
                 async () => {
+                    // this.#content
+                    //     .querySelectorAll(".small-preview")
+                    //     .forEach((item) => (item.style.display = "none"));
                     this.#content.innerHTML = "";
 
                     let formTemplate = modal.querySelector(
@@ -505,6 +502,7 @@ export class ModalGallery {
 
     /**
      * Supprime la modale du DOM
+     * et réinitialise tous les array d'erreurs ou d'inputs
      * @param {HTMLElement} modal - La modale
      * @returns
      */
