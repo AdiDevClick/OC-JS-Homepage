@@ -227,6 +227,7 @@
                     height: 100%;
                     /* object-fit: contain; */
                     object-fit: cover;
+                    max-height: 140px;
                 }
 
                 .icon {
